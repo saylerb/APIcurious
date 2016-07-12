@@ -14,7 +14,9 @@
         <a href="/">Home</a>
       </li>
       <li>
-          <%= link_to "Sign in with reddit", reddit_login_path %>
+          <% s = rand(1...1000) %>
+          <%= link_to "Login with Reddit", "https://www.reddit.com/api/v1/authorize?client_id=uVHS9Rd38jksKQ&response_type=code&state=#{s}&redirect_uri=http://localhost:3000/auth/reddit/callback&duration=permanent&scope=identity edit flair history modconfig modflair modlog modposts modwiki mysubreddits privatemessages read report save submit subscribe vote wikiedit wikiread" %>
+
       </li>
     </ul>
   </div>
