@@ -1,25 +1,26 @@
-class SessionsController < ApplicationController
+class SessionsController < ActionController::Base
   def create
-    code = params["code"]
-    uri = URI('https://www.reddit.com/api/v1/access_token')
+   if params["code"]
+    authenticator = RedditAuthService.new(params["code"])
+    res = authenticator.token_response
 
-    req = Net::HTTP::Post.new(uri)
-
-    req.set_form_data({ "grant_type" => "authorization_code", 
-                        "code" => code, 
-                        "redirect_uri" => "http://localhost:3000/auth/reddit/callback",
-                        "Content-Type" => "application/x-www-form-urlencoded"
-                      })
-
-    req.basic_auth ENV["REDDIT_KEY"], ENV["REDDIT_SECRET"]
-
-    res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https") do |http|
-      http.request(req)
+    case res
+    when Net::HTTPSuccess
+      access_token = authenticator.access_token
+      flash[:notice] = "Sucessfully Authenticated"
+      session[:access_token] = access_token
+      render text: res.body.inspect + " Code: " + params["code"]
+    else
+      res.value
+      flash[:error] = "Something went wrong"
+      redirect_to root_path
     end
-    res.body
 
-    render text: res.body.inspect + "Code: " + code
-
+   else
+     flash[:error] = "Code not present"
+     redirect_to root_path
+   end
+    
     # Could create a user in the database to store tokens
     # When they login, it updates that token
     # Move this code out of the controller
