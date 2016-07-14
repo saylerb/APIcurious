@@ -11,7 +11,8 @@ class SessionsController < ActionController::Base
       session[:access_token] = access_token
       redirect_to root_path
     else
-      flash[:error] = "Oops, something went wrong: #{@res.body["message"]}"
+      flash[:error] = "Oops, something went wrong: #{@res.message}"
+      binding.pry
       redirect_to root_path
     end
 
