@@ -8,10 +8,10 @@ class RedditAuthService
   def get_token_response(code)
     uri = URI('https://www.reddit.com/api/v1/access_token')
 
-    Net::HTTP.start(uri.hostname, uri.port,
+    res = Net::HTTP.start(uri.hostname, uri.port,
             use_ssl: uri.scheme == "https") do |http|
       req = Net::HTTP::Post.new(uri)
-      req.set_form_data(token_params(@code))
+      req.set_form_data(token_params(code))
       req.basic_auth ENV["REDDIT_KEY"], ENV["REDDIT_SECRET"]
       http.request(req)
     end
