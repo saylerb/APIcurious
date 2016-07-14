@@ -1,0 +1,8 @@
+<h1>User data:</h1>
+
+<ul>
+  <li>Username: <%= @user.name %> </li>
+  <li>Created: <%= Time.new(@user.created_utc).strftime("%A, %b %d") %> </li>
+  <li>Link Karma: <%= @user.link_karma %> </li>
+</ul>
+

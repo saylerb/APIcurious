@@ -1,18 +1,4 @@
 <h1>Welcome!</h1>
-
 <p>Current Access token: <%= @access_token %><p>
-
-<p>User Data: <p>
-
-<ul>
-  <li>Username: <%= @user.name %> </li>
-  <li>Created: <%= Time.new(@user.created_utc).strftime("%A, %b %d") %> </li>
-  <li>Link Karma: <%= @user.link_karma %> </li>
-</ul>
-
-<p>Subscriptions:</p>
-<ul>
-  <% @subreddits.each do |subreddit| %>
-    <li><%= subreddit.display_name %></li>
-  <% end %>
-</ul>
+<p><%= link_to "View my user information", user_path %> </p>
+<p><%= link_to "View my subscriptions", subreddits_path %> </p>

@@ -7,16 +7,16 @@ class SessionsController < ActionController::Base
     case @res
     when Net::HTTPSuccess
       access_token = authenticator.access_token
-      flash.now[:notice] = "Sucessfully Authenticated"
+      flash[:notice] = "Sucessfully Authenticated!!!"
       session[:access_token] = access_token
       redirect_to root_path
     else
-      flash.now[:error] = "#{@res.body} Something went wrong"
+      flash[:error] = "Oops, something went wrong: #{@res.body["message"]}"
       redirect_to root_path
     end
 
    else
-     flash.now[:error] = "Code not present"
+     flash.now[:error] = "Error"
      redirect_to root_path
    end
   end

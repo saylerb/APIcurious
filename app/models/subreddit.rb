@@ -12,5 +12,11 @@ class Subreddit < OpenStruct
     end
   end
 
+  def self.find(access_token, subreddit_name)
+    data = service.get_subreddit_info(access_token, subreddit_name)
+
+    sub = Subreddit.new(data[:data])
+  end
+
 end
 

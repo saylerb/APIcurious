@@ -1,0 +1,6 @@
+<p>Subscriptions:</p>
+<ul>
+  <% @subreddits.each do |subreddit| %>
+    <li><%= link_to subreddit.display_name, subreddit_path(subreddit.display_name)  %></li>
+  <% end %>
+</ul>
