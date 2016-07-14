@@ -18,7 +18,7 @@ class RedditAuthService
   end
 
   def get_access_token
-    JSON.parse(@token_response.body, symbolize_names: true)
+    JSON.parse(@token_response.body, symbolize_names: true)[:access_token]
   end
   
   private

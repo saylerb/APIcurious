@@ -2,27 +2,22 @@ class SessionsController < ActionController::Base
   def create
    if params["code"]
     authenticator = RedditAuthService.new(params["code"])
-    res = authenticator.token_response
+    @res = authenticator.token_response
 
-    case res
+    case @res
     when Net::HTTPSuccess
       access_token = authenticator.access_token
-      flash[:notice] = "Sucessfully Authenticated"
+      flash.now[:notice] = "Sucessfully Authenticated"
       session[:access_token] = access_token
-      render text: res.body.inspect + " Code: " + params["code"]
+      redirect_to root_path
     else
-      res.value
-      flash[:error] = "Something went wrong"
+      flash.now[:error] = "#{@res.body} Something went wrong"
       redirect_to root_path
     end
 
    else
-     flash[:error] = "Code not present"
+     flash.now[:error] = "Code not present"
      redirect_to root_path
    end
-    
-    # Could create a user in the database to store tokens
-    # When they login, it updates that token
-    # Move this code out of the controller
   end
 end
