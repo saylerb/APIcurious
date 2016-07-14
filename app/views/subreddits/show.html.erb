@@ -1,4 +1,3 @@
-<h1><%= @subreddit.display_name %></h1>
+<h1><%= link_to @subreddit.display_name, "https://www.reddit.com#{@subreddit.url}" %></h1>
 
 <%== CGI.unescapeHTML(@subreddit.description_html) %>
-
