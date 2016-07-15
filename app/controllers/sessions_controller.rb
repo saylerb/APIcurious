@@ -12,7 +12,6 @@ class SessionsController < ActionController::Base
       redirect_to root_path
     else
       flash[:error] = "Oops, something went wrong: #{@res.message}"
-      binding.pry
       redirect_to root_path
     end
 
